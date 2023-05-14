@@ -8,6 +8,7 @@ export enum Category{
 }
 
 export class Coupon {
+    id: number;
     company: Company;
     category: Category;
     title: string;
@@ -18,7 +19,8 @@ export class Coupon {
     price: number;
     image: string;
 
-    constructor(company: Company, category: Category, title: string, description: string, startDate: Date, endDate: Date, amount: number, price: number, image: string) {
+    constructor(id: number, company: Company, category: Category, title: string, description: string, startDate: Date, endDate: Date, amount: number, price: number, image: string) {
+        this.id = id;
         this.company = company;
         this.category = category;
         this.title = title;
