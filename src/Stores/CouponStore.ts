@@ -9,7 +9,7 @@ export enum CouponsActionsTypes {
   FetchCoupons,
   AddCoupon,
   DeleteCoupon,
-  UpdateCoupon
+  UpdateCoupon,
 }
 
 export interface CouponsActions {
