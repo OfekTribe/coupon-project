@@ -10,16 +10,16 @@ export enum Category{
 export class Coupon {
     id: number;
     company: Company;
-    category: Category;
+    category: typeof Category;
     title: string;
     description: string;
     startDate: Date;
     endDate: Date;
     amount: number;
     price: number;
-    image: string;
+    image: File | FileList;
 
-    constructor(id: number, company: Company, category: Category, title: string, description: string, startDate: Date, endDate: Date, amount: number, price: number, image: string) {
+    constructor(id: number, company: Company, category: typeof Category, title: string, description: string, startDate: Date, endDate: Date, amount: number, price: number, image: File | FileList) {
         this.id = id;
         this.company = company;
         this.category = category;
