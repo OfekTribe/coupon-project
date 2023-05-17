@@ -55,7 +55,6 @@ class AdminService {
   }
 
   public async updateCompany(company: Company) {
-    // -------------------------
     const formData = new FormData();
     formData.append("name", company.name);
     formData.append("email", company.email);
@@ -119,6 +118,14 @@ class AdminService {
       return response.data;
     }
     return customersStore.getState().customers;
+  }
+
+  public async getCustomer(id: number): Promise<Customer> {
+    const customer = customersStore
+      .getState()
+      .customers.find((c) => c.id == id);
+    if (customer == undefined) throw Error("Id not found!");
+    else return customer;
   }
 }
 
