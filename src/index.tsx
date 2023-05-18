@@ -4,9 +4,8 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
 import { ToastContainer } from "react-toastify";
-import { tokenInterceptor } from "./Services/TokenInterceptor";
 
-tokenInterceptor();
+//tokenInterceptor();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

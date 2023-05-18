@@ -2,10 +2,5 @@ body, html, #root {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   height: 100%;
-  background-color: #F6EDB1;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  background-color: #F4F3C8;
 }
