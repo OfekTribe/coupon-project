@@ -81,7 +81,7 @@ class CompanyService {
 
     public async getCouponsByPrice(maxPrice: number): Promise<Coupon[]> {
       const response = await Axios.get<Coupon[]>(
-        "http://localhost:8080/company/couponsByCategory/" + maxPrice
+        "http://localhost:8080/company/couponsByMaxPrice/" + maxPrice
       );
       couponsStore.dispatch(fetchCoupons(response.data));
       return response.data;

@@ -1,3 +1,23 @@
 .Layout {
-	
+	display: grid;
+    height: 100%;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 10% 80% 10%;
 }
+
+.Layout>header, .Layout>footer{
+    grid-column: span 2;
+}
+
+.Layout>*{
+    border: solid black 1px;
+}
+
+.Layout>main {
+    overflow: auto;
+}
+
+main {
+    font-size: 15px;
+}
+
