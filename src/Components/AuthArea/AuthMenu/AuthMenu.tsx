@@ -1,9 +1,45 @@
+import { NavLink, useNavigate } from "react-router-dom";
+import Login from "../Login/Login";
 import "./AuthMenu.css";
+import { useEffect, useState } from "react";
+import { authStore } from "../../../Stores/AuthState";
+import authService from "../../../Services/AuthService";
 
 function AuthMenu(): JSX.Element {
+
+    const navigate = useNavigate();
+    const [token, setToken] = useState<string>();
+
+    useEffect(() => {
+        setToken(authStore.getState().token);
+        const unsubscribe = authStore.subscribe(() => {
+            setToken(authStore.getState().token);
+        })
+        return () => {
+            unsubscribe();
+        }
+    },[])
+
+    function logout() {
+        authService.logout().then(
+            () => {
+                navigate("/login");
+            }
+        ).catch();
+    }
+
     return (
         <div className="AuthMenu">
-			
+            {
+                !token &&
+                <>
+                    <NavLink to={"/login"}>Login</NavLink>
+                </> ||
+                <>
+                    Hello {authStore.getState().name}
+                    <button onClick={logout}>Logout</button>
+                </>
+            } 
         </div>
     );
 }

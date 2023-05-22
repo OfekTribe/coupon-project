@@ -1,65 +1,39 @@
-import React from "react";
-import { Button, Checkbox, Form, Input, Radio } from "antd";
+import { useForm } from "react-hook-form";
+import { Credentials } from "../../../Models/Credentials";
 import "./Login.css";
 import authService from "../../../Services/AuthService";
 import notificationService from "../../../Services/NotificationService";
-import { error } from "console";
+import { authStore } from "../../../Stores/AuthState";
 
-const onFinish = (values: any) => {
-  authService.login(values).catch(error => console.log(error));
-  console.log("Success:", values);
-};
+function Login(): JSX.Element{
 
-const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo);
-};
+  const { register, handleSubmit } = useForm<Credentials>();
 
-const Login: React.FC = () => (
-  <Form
-    name="basic"
-    labelCol={{ span: 8 }}
-    wrapperCol={{ span: 16 }}
-    style={{ maxWidth: 600 }}
-    initialValues={{ remember: true }}
-    onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
-    autoComplete="off"
-  >
-    <Form.Item
-      label="Email"
-      name="email"
-      rules={[{ required: true, message: "Please input your email!" }]}
-    >
-      <Input />
-    </Form.Item>
+  function send(creds: Credentials) {
+    authService.login(creds).then(
+      () => { notificationService.success("Welcome back " + authStore.getState().name)}
+    ).catch(err => notificationService.error("Something's wrong please check your details"))
+  }
 
-    <Form.Item
-      label="Password"
-      name="password"
-      rules={[{ required: true, message: "Please input your password!" }]}
-    >
-      <Input.Password />
-    </Form.Item>
+  return(
+    <div className="Login">
+      <form onSubmit={handleSubmit(send)}>
+        <h2>Login</h2>
+        <input type="text" placeholder="Please enter email" required /> <br /> <br />
+        <input type="text" placeholder="Please enter password" required /><br /><br />
+        <>
+        <label>Company</label><br />
+        <input type="radio" name="type" required/><br />
+        <label>Customer</label><br />
+        <input type="radio" name="type" required/><br />
+        <label>Admin</label><br />
+        <input type="radio" name="type" required/><br />
+        <input type="submit" value="Login" />
+        </>
+      </form>
+    </div>
+  )
 
-    <Form.Item
-      name="clientType"
-      valuePropName="value"
-      wrapperCol={{ offset: 8, span: 16 }}
-      initialValue={0}
-    >
-      <Radio.Group defaultValue={0}>
-        <Radio value={0}>Comapny</Radio>
-        <Radio value={1}>Admin</Radio>
-        <Radio value={8}>Customer</Radio>
-      </Radio.Group>
-    </Form.Item>
-
-    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-      <Button type="primary" htmlType="submit">
-        Submit
-      </Button>
-    </Form.Item>
-  </Form>
-);
+}
 
 export default Login;

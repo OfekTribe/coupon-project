@@ -1,2 +1,26 @@
 .Login {
+    margin: auto;
+    margin-left: -5rem;
+    width: auto;
+    height: 70vh;
+    background: #B799FF;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    justify-content: center;
+    place-items: center;
+    overflow: hidden;
+    font-family: poppins;
+}
+
+.Login h2 {
+    margin-top: 10px;
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: #E6FFFD;
+  letter-spacing: 1px;
+}
+
+.Login label {
+  color: #AEE2FF;
 }
