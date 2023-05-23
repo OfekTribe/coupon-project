@@ -10,8 +10,8 @@ class NotificationService{
     public error(err : any){
         if(typeof err == "string"){
             toast.error(err);
-        } else if (typeof err.response?.data[0] == "string"){
-            toast.error(err.response.data[0]);
+        } else if (typeof err.response?.data == "string"){
+            toast.error(err.response.data);
         } else {
             toast.error(err.msg);
         }

@@ -20,3 +20,9 @@ main {
     font-size: 15px;
 }
 
+aside {
+    background-color: #ACBCFF;
+    border-radius: 10%;
+    margin-right: 7rem;
+}
+

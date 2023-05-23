@@ -3,7 +3,7 @@ import "./Footer.css";
 function Footer(): JSX.Element {
     return (
         <div className="Footer">
-			<h1>Footer</h1>
+			<p>All Rights Reserved to @Ofek Marom@</p>
         </div>
     );
 }

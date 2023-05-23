@@ -7,10 +7,7 @@ function Menu(): JSX.Element {
         <div className="Menu">
 			<h1>Menu</h1>
             <AuthMenu/><br />
-            <div className="div2">
             <NavLink to={"/about"}>About Us</NavLink><br /><br />
-            <NavLink to={"/coupons"}>Coupons</NavLink><br />
-            </div>
         </div>
     );
 }

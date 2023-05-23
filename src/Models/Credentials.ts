@@ -11,7 +11,7 @@ export class Credentials {
 }
 
 export enum ClientType {
-  admin,
-  company,
-  customer,
+  Admin,
+  Company,
+  Customer,
 }
