@@ -1,19 +1,22 @@
 import { Coupon } from "../../../Models/Coupon";
 import "./CouponCard.css";
 
-interface couponProps{
-    coupon: Coupon;
+interface couponProps {
+  coupon: Coupon;
 }
 
 function CouponCard(props: couponProps): JSX.Element {
-    return (
-        <div className="CouponCard">
-			<h2>{props.coupon.title}</h2>
-            <p>{props.coupon.description}</p>
-            <p>End date : {props.coupon.endDate.toString()}</p>
-            <img src={props.coupon.image.toString()} alt="img" ></img>
-        </div>
-    );
+  return (
+    <div className="CouponCard">
+      <h2>
+        <strong>{props.coupon.title}</strong>
+      </h2>
+      <p>Description: {props.coupon.description}</p>
+      <p>Start date: {props.coupon.endDate.toString()}</p>
+      <p>End date: {props.coupon.endDate.toString()}</p>
+      <img src={props.coupon.image.toString()} alt="img"></img>
+    </div>
+  );
 }
 
 export default CouponCard;

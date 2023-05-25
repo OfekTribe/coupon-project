@@ -10,10 +10,11 @@ function Routing(): JSX.Element {
   return (
     <div className="Routing">
       <Routes>
+        <Route path="/admin/companies"></Route>
         <Route path="/about" element={<AboutUs />}></Route>
         <Route path="/login" element={<Login />}></Route>
-      <Route path="/home" element={<Home />} />
-      <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Navigate to="/home" />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
