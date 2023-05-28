@@ -26,22 +26,10 @@ class CustomerService {
     return response;
   }
 
-  public async getAllCoupons(): Promise<Coupon[]> {
-    if (couponsStore.getState().coupons.length == 0) {
-      const response = await Axios.get<Coupon[]>(
-        "http://localhost:8080/customer/coupons"
-      );
-      couponsStore.dispatch(fetchCoupons(response.data));
-      return response.data;
-    }
-    return couponsStore.getState().coupons;
-  }
-
   public async getCouponsByCategory(category: Category): Promise<Coupon[]> {
     const response = await Axios.get<Coupon[]>(
       "http://localhost:8080/customer/couponsByCategory/" + category
     );
-    couponsStore.dispatch(fetchCoupons(response.data));
     return response.data;
   }
 
@@ -49,7 +37,6 @@ class CustomerService {
     const response = await Axios.get<Coupon[]>(
       "http://localhost:8080/customer/couponsByMaxPrice/" + maxPrice
     );
-    couponsStore.dispatch(fetchCoupons(response.data));
     return response.data;
   }
 

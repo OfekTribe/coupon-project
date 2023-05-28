@@ -15,6 +15,7 @@ import {
   fetchCustomers,
   updateCustomer,
 } from "../Stores/CustomerStore";
+import authService from "./AuthService";
 
 class AdminService {
   public async getAllCompanies(): Promise<Company[]> {
