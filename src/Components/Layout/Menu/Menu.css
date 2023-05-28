@@ -3,8 +3,13 @@
 }
 
 .Menu h1 {
-    text-decoration: underline;
-    color: #AEE2FF;
+    color: black;
+    text-decoration: solid;
+    border-radius: 20%;
+    position:sticky;
+}
+
+.Menu {
 }
 
 

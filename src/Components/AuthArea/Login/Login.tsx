@@ -12,7 +12,7 @@ function Login(): JSX.Element{
   function send(creds: Credentials) {
     authService.login(creds).then(
       () => { notificationService.success("Welcome back :)")}
-    ).catch(err => console.log(err))//notificationService.error(err))
+    ).catch(err => notificationService.error(err))
     console.log(creds);
   }
 

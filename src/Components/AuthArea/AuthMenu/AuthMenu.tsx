@@ -6,42 +6,45 @@ import { authStore } from "../../../Stores/AuthState";
 import authService from "../../../Services/AuthService";
 
 function AuthMenu(): JSX.Element {
+  const navigate = useNavigate();
+  const [token, setToken] = useState<string>();
 
-    const navigate = useNavigate();
-    const [token, setToken] = useState<string>();
+  useEffect(() => {
+    setToken(authStore.getState().token);
+    const unsubscribe = authStore.subscribe(() => {
+      setToken(authStore.getState().token);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
-    useEffect(() => {
-        setToken(authStore.getState().token);
-        const unsubscribe = authStore.subscribe(() => {
-            setToken(authStore.getState().token);
-        })
-        return () => {
-            unsubscribe();
-        }
-    },[])
+  function logout() {
+    authService
+      .logout()
+      .then(() => {
+        navigate("/login");
+      })
+      .catch();
+  }
 
-    function logout() {
-        authService.logout().then(
-            () => {
-                navigate("/login");
-            }
-        ).catch();
-    }
-
-    return (
-        <div className="AuthMenu">
-            {
-                !token &&
-                <>
-                    <NavLink to={"/login"}>Login</NavLink>
-                </> ||
-                <>
-                    Hello {authStore.getState().name}
-                    <button onClick={logout}>Logout</button>
-                </>
-            } 
-        </div>
-    );
+  return (
+    <div className="AuthMenu">
+      {(!token && (
+        <>
+          <NavLink to={"/login"}>
+            <button className="button">Login</button>
+          </NavLink>
+        </>
+      )) || (
+        <>
+          <button className="button" onClick={logout}>
+            Logout
+          </button>
+        </>
+      )}
+    </div>
+  );
 }
 
 export default AuthMenu;

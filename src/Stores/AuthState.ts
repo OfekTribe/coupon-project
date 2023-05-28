@@ -2,52 +2,74 @@ import jwtDecode from "jwt-decode";
 import { ClientType } from "../Models/Credentials";
 import { createStore } from "redux";
 
-export class AuthState{
-    public token: string = null;
-    public id: number = null;
-    public email: string = null;
-    public name: string = null;
-    public clientType: ClientType;
+export class AuthState {
+  public token: string = null;
+  public userData: userData = null;
 
+  constructor() {
+    if (localStorage.token) {
+      this.token = localStorage.token;
+      const container: { date: userData } = jwtDecode(this.token);
+      this.userData = container.date;
+    }
+  }
+}
+
+export class userData {
+  public id: number = null;
+  public email: string = null;
+  public name: string = null;
+  public clientType: ClientType = null;
 }
 
 export enum AuthActionTypes {
-    Login, Logout
+  Login,
+  Logout,
 }
 
 export interface AuthAction {
-    type: AuthActionTypes,
-    payload?: AuthState
+  type: AuthActionTypes;
+  payload?: string;
 }
 
-export function LoginAction(state: AuthState) {
-    return { type: AuthActionTypes.Login, payload: state }
+export function LoginAction(token: string) {
+  return { type: AuthActionTypes.Login, payload: token };
 }
 
 export function logoutAction() {
-    return { type: AuthActionTypes.Logout }
+  return { type: AuthActionTypes.Logout };
 }
 
-export function authReducer(currentState = new AuthState(), action: AuthAction) {
+function getDecodedAccessToken(token: string): any {
+  try {
+    return jwtDecode(token);
+  } catch (Error) {
+    return console.log(Error);
+  }
+}
 
-    const newState = { ...currentState };
+export function authReducer(
+  currentState = new AuthState(),
+  action: AuthAction
+) {
+  const newState = { ...currentState };
 
-    switch (action.type) {
-        case AuthActionTypes.Login:
-            const container: AuthState = jwtDecode(action.payload.token);
-            newState.clientType = container.clientType;
-            newState.email = container.email;
-            newState.id = container.id;
-            newState.name = container.name;
-            break;
-        case AuthActionTypes.Logout:
-            newState.clientType = null;
-            newState.email = null;
-            newState.id = null;
-            newState.name = null;
-            newState.token = null;
-            break;
-    }
-    return newState;
+  switch (action.type) {
+    case AuthActionTypes.Login:
+      const token = action.payload;
+      newState.token = token;
+      const container: { data: userData } = getDecodedAccessToken(
+        newState.token
+      );
+      newState.userData = container.data;
+      localStorage.token = token;
+      break;
+    case AuthActionTypes.Logout:
+      newState.token = null;
+      newState.userData = null;
+      localStorage.removeItem("token");
+      break;
+  }
+  return newState;
 }
 export const authStore = createStore(authReducer);
