@@ -30,48 +30,48 @@ function AddCoupon(): JSX.Element {
 			<Form className="flex-box" onSubmit={handleSubmit(sendCoupon)}>
                 <>
                     <h2>Add New Product : </h2>
-                    <input type="text" id="company" placeholder="" {...register("company", {
+                    <input type="text" id="company" placeholder="Company" {...register("company", {
                         required: { value: true, message: "You must enter coupon's company" },
                     })}
                     /><br /><br />
                     <span>{formState.errors?.company?.message}</span><br />
 
-                    <input type="text" placeholder="category" {...register("category", {
+                    <input type="text" id="category" placeholder="Category" {...register("category", {
                         required: { value: true, message: "You must enter coupon's category" }
                     })} /><br /><br />
                     <span>{formState.errors?.category?.message}</span><br />
 
-                    <input type="text" placeholder="title" {...register("title", {
+                    <input type="text" id="title" placeholder="Title" {...register("title", {
                         required: { value: true, message: "You must enter coupon's title" }
                     })} /><br /><br />
                     <span>{formState.errors?.title?.message}</span><br />
 
-                    <input type="text" placeholder="description" {...register("description", {
+                    <input type="text" id="description" placeholder="Description" {...register("description", {
                         required: { value: true, message: "You must enter coupon's description" }
                     })} /><br /><br />
                     <span>{formState.errors?.description?.message}</span><br />
 
-                    <input type="text" placeholder="startDate" {...register("startDate", {
+                    <input type="text" id="startDate" placeholder="Start Date" {...register("startDate", {
                         required: { value: true, message: "You must enter coupon's start date" }
                     })} /><br /><br />
                     <span>{formState.errors?.startDate?.message}</span><br />
 
-                    <input type="text" placeholder="endDate" {...register("endDate", {
+                    <input type="text" id="endDate" placeholder="End Date" {...register("endDate", {
                         required: { value: true, message: "You must enter coupon's end date" }
                     })} /><br /><br />
                     <span>{formState.errors?.endDate?.message}</span><br />
 
-                    <input type="text" placeholder="amount" {...register("amount", {
+                    <input type="text" id="amount" placeholder="Amount" {...register("amount", {
                         required: { value: true, message: "You must enter coupon's amount" }
                     })} /><br /><br />
                     <span>{formState.errors?.amount?.message}</span><br />
 
-                    <input type="text" placeholder="price" {...register("price", {
+                    <input type="text" id="price" placeholder="Price" {...register("price", {
                         required: { value: true, message: "You must enter coupon's price" }
                     })} /><br /><br />
                     <span>{formState.errors?.price?.message}</span><br />
 
-                    <input type="file" placeholder="image" {...register("image")}/>
+                    <input type="file" id="image" placeholder="Image" {...register("image")}/>
 
                     <input type="submit" value="Add" />
                 </>

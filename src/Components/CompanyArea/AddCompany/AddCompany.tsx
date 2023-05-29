@@ -29,23 +29,25 @@ function AddCompany(): JSX.Element {
 			<Form onSubmit={handleSubmit(sendCompany)}>
                 <>
                     <h2>Add New Company : </h2>
-                    <input type="text" id="email" placeholder="" {...register("email", {
+                    <input type="text" id="email" placeholder="Email" {...register("email", {
                         required: { value: true, message: "You must enter company email" },
                     })}
                     /><br /><br />
                     <span>{formState.errors?.email?.message}</span><br />
 
-                    <input type="text" id="name" placeholder="" {...register("name", {
+                    <input type="text" id="name" placeholder="Name" {...register("name", {
                         required: { value: true, message: "You must enter company name" },
                     })}
                     /><br /><br />
                     <span>{formState.errors?.name?.message}</span><br />
 
-                    <input type="text" id="password" placeholder="" {...register("password", {
+                    <input type="password" id="password" placeholder="Password" {...register("password", {
                         required: { value: true, message: "You must enter company password" },
                     })}
                     /><br /><br />
                     <span>{formState.errors?.password?.message}</span><br />
+
+                    <input type="submit" value="Add" />
                 </>
             </Form>
         </div>

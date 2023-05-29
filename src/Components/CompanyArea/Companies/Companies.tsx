@@ -6,21 +6,25 @@ import CompanyCard from "../CompanyCard/CompanyCard";
 import "./Companies.css";
 
 function Companies(): JSX.Element {
+  const [getCompanies, setCompanies] = useState<Company[]>([]);
 
-    const [getCompanies, setCompanies] = useState<Company[]>([]);
+  useEffect(() => {
+    const adminService = new AdminService();
+    adminService
+      .getAllCompanies()
+      .then((companies) => {
+        setCompanies(companies);
+      })
+      .catch((err) => alert(err));
+  }, []);
 
-    useEffect(() => {
-        const adminService = new AdminService();
-        adminService.getAllCompanies().then(companies => {
-            setCompanies(companies);
-        }).catch(err => alert(err));
-    }, [])
-
-    return (
-        <div className="Companies">
-            {getCompanies.map(comp => <CompanyCard key={comp.id} company={comp} />)}			
-        </div>
-    );
+  return (
+    <div className="Companies">
+      {getCompanies.map((comp) => (
+        <CompanyCard key={comp.id} company={comp} />
+      ))}
+    </div>
+  );
 }
 
 export default Companies;
