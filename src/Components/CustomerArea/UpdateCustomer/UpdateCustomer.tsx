@@ -51,7 +51,7 @@ function UpdateCustomer(): JSX.Element {
           <br />
 
           <input
-            type="text"
+            type="password"
             id="password"
             placeholder="Password"
             {...register("password")}
