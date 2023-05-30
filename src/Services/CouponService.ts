@@ -1,7 +1,6 @@
 import Axios from "axios";
 import { Category, Coupon } from "../Models/Coupon";
 import { addCoup, couponsStore, deleteCoup, fetchCoupons, updateCoup } from "../Stores/CouponStore";
-import Company from "../Models/Company";
 
 class CouponService {
   public async getAllCoupons(): Promise<Coupon[]> {
@@ -60,7 +59,7 @@ class CouponService {
   }
 
   public async deleteCoupon(id: number) {
-    (await Axios.delete<String>("http://localhost:8080/company/deleteCoupon/" + id)).data;
+    const respons = (await Axios.delete<string>("http://localhost:8080/company/deleteCoupon/" + id)).data;
     couponsStore.dispatch(deleteCoup(id));
   }
 

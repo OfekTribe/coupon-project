@@ -105,7 +105,7 @@ class AdminService {
 
   public async deleteCustomer(id: number) {
     const response = (
-      await Axios.delete<number>("http://localhost:8080/admin/addCustomer" + id)
+      await Axios.delete<number>("http://localhost:8080/admin/deleteCustomer/" + id)
     ).data;
     customersStore.dispatch(deleteCustomer(response));
   }

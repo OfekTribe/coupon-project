@@ -52,14 +52,14 @@ function couponsReducer(
       if (index >= 0) {
         newState.coupons.splice(index, 1);
       }
-      break;
+        break;
     case CouponsActionsTypes.UpdateCoupon:
       const coupId = action.payload.id;
       const coupIndex = newState.coupons.findIndex((c) => c.id == coupId);
-      if (coupId >= 0) {
-        newState.coupons[coupIndex] == action.payload;
+      if (coupIndex >= 0) {
+        newState.coupons[coupIndex] = action.payload;
       }
-      break;
+        break;
   }
   return newState;
 }

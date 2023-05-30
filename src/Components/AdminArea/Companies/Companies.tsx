@@ -23,7 +23,7 @@ function Companies(): JSX.Element {
   return (
     <div className="Companies">
       <div>
-        <NavLink to={"/admin/addComp"}>
+        <NavLink to={"/addCompany"}>
           <button className="button" role="button">
             Add new Company
           </button>
