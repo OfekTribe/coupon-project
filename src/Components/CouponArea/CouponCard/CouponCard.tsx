@@ -1,23 +1,57 @@
-import { Coupon } from "../../../Models/Coupon";
+import { NavLink } from "react-router-dom";
 import "./CouponCard.css";
+import customerService from "../../../Services/CustomerService";
+import notificationsService from "../../../Services/NotificationsService";
+import { Coupon } from "../../../Models/Coupon";
+import { authStore } from "../../../Stores/AuthState";
 
-interface couponProps {
+interface CouponsProps {
   coupon: Coupon;
 }
 
-function CouponCard(props: couponProps): JSX.Element {
-    return (
-        <div className="CouponCard">
-			<h2>{props.coupon.title}</h2>
-            <p>Category : {JSON.stringify(props.coupon.category)}</p>
-            <p>Description : {props.coupon.description}</p>
-            <p>Start date : {props.coupon.startDate.toDateString()}</p>
-            <p>End date : {props.coupon.endDate.toDateString()}</p>
-            <p>Amount : {props.coupon.amount}</p>
+function CouponCard(props: CouponsProps): JSX.Element {
+  function purchaseCoupon() {
+    customerService
+      .purchaseCoupon(props.coupon)
+      .then((msg) => notificationsService.success(msg))
+      .catch((err) => notificationsService.error(err));
+  }
+
+  return (
+    <div className="CouponCard">
+      {authStore.getState().token &&
+        authStore.getState().clientType.toString() == "Company" && (
+          <>
+            <NavLink to={"/company/coupons/" + props.coupon.id}>
+              <h3>{props.coupon.title}</h3>
+            </NavLink>
+            <img src={"" + props.coupon.image} alt={props.coupon.title} />
             <p>Price : {props.coupon.price}</p>
-            <img src={props.coupon.image.toString()} alt="img" ></img>
-        </div>
-    );
+          </>
+        )}
+
+      {authStore.getState().token &&
+        authStore.getState().clientType.toString() == "Customer" && (
+          <>
+            <NavLink to={"/customer/coupons/" + props.coupon.id}>
+              <h3>{props.coupon.title}</h3>
+            </NavLink>
+            <img src={"" + props.coupon.image} alt={props.coupon.title} />
+            <p>Price : {props.coupon.price}</p>
+            <button onClick={purchaseCoupon}>Purchase Coupon</button>
+          </>
+        )}
+
+      {authStore.getState().token &&
+        authStore.getState().clientType.toString() == "Admin" && (
+          <>
+            <h3>{props.coupon.title}</h3>
+            <img src={"" + props.coupon.image} alt={props.coupon.title} />
+            <p>Price : {props.coupon.price}</p>
+          </>
+        )}
+    </div>
+  );
 }
 
 export default CouponCard;

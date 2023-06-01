@@ -3,13 +3,14 @@ import { Credentials } from "../Models/Credentials";
 import { LoginAction, authStore, logoutAction } from "../Stores/AuthState";
 
 class AuthService {
-  public async login(creds: Credentials) {
+  public async Login(creds: Credentials) {
     const token = (await axios.post("http://localhost:8080/auth/login", creds))
       .data;
     authStore.dispatch(LoginAction(token));
+    return token;
   }
 
-  public async logout() {
+  public async Logout() {
     authStore.dispatch(logoutAction());
   }
 }

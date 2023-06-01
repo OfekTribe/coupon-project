@@ -1,133 +1,118 @@
-import Axios from "axios";
+import axios from "axios";
 import Company from "../Models/Company";
-import {
-  addCompany,
-  companiesStore,
-  deleteCompany,
-  fetchCompanies,
-  updateCompany,
-} from "../Stores/CompanyStore";
 import Customer from "../Models/Customer";
 import {
+  adminStore,
+  addCompany,
+  updateCompany,
+  deleteCompany,
+  fetchCompany,
   addCustomer,
-  customersStore,
-  deleteCustomer,
-  fetchCustomers,
   updateCustomer,
-} from "../Stores/CustomerStore";
-import authService from "./AuthService";
+  deleteCustomer,
+  fetchCustomer,
+} from "../Stores/AdminState";
 
 class AdminService {
-  public async getAllCompanies(): Promise<Company[]> {
-    if (companiesStore.getState().companies.length == 0) {
-      const response = await Axios.get<Company[]>(
-        "http://localhost:8080/admin/allCompanies"
-      );
-      companiesStore.dispatch(fetchCompanies(response.data));
-      return response.data;
-    }
-    return companiesStore.getState().companies;
-  }
-
-  public async addNewCompany(company: Company) {
-    const formData = new FormData();
-    formData.append("name", company.name);
-    formData.append("email", company.email);
-    formData.append("password", company.password);
-    formData.append("coupons", company.coupons.toString());
+  public async addCompany(company: Company) {
     const response = (
-      await Axios.post<Company>("http://localhost:8080/admin/addComp", formData)
+      await axios.post<Company>("http://localhost:8080/admin/addComp", company)
     ).data;
-    companiesStore.dispatch(addCompany(response));
+    adminStore.dispatch(addCompany(response));
     return response;
   }
 
-  public async getCompany(id: number): Promise<Company> {
-    const company = companiesStore.getState().companies.find((c) => c.id == id);
-    if (company == undefined) throw Error("Id not found!");
-    else return company;
+  public async updateCompany(company: Company) {
+    const respone = (
+      await axios.put<string>("http://localhost:8080/admin/updateComp", company)
+    ).data;
+    adminStore.dispatch(updateCompany(company));
+    return respone;
   }
 
   public async deleteCompany(id: number) {
     const response = (
-      await Axios.delete<number>("http://localhost:8080/admin/deleteComp/" + id)
+      await axios.delete<string>("http://localhost:8080/admin/deleteComp/" + id)
     ).data;
-    companiesStore.dispatch(deleteCompany(response));
+    adminStore.dispatch(deleteCompany(id));
+    return response;
   }
 
-  public async updateCompany(company: Company) {
-    const formData = new FormData();
-    formData.append("name", company.name);
-    formData.append("email", company.email);
-    formData.append("password", company.password);
-    formData.append("coupons", company.coupons.toString());
+  public async getOneCompany(id: number) {
+    const company = adminStore.getState().companies.find((c) => c.id == id);
+    if (company == undefined)
+      return (
+        await axios.get<Company>(
+          "http://localhost:8080/admin/getOneCompany/" + id
+        )
+      ).data;
+    else return company;
+  }
+
+  public async getAllCompanies() {
+    if (adminStore.getState().companies.length == 0) {
+      const companies = (
+        await axios.get<Company[]>("http://localhost:8080/admin/allCompanies")
+      ).data;
+      adminStore.dispatch(fetchCompany(companies));
+      return companies;
+    }
+    return adminStore.getState().companies;
+  }
+
+  public async addCustomer(customer: Customer) {
     const response = (
-      await Axios.put<Company>(
-        "http://localhost:8080/admin/updateComp" + company.id,
-        formData
+      await axios.post<Customer>(
+        "http://localhost:8080/admin/addCustomer",
+        customer
       )
     ).data;
-    companiesStore.dispatch(updateCompany(response));
+    adminStore.dispatch(addCustomer(response));
     return response;
   }
 
   public async updateCustomer(customer: Customer) {
-    const formData = new FormData();
-    formData.append("email", customer.email);
-    formData.append("password", customer.password);
-    formData.append("coupons", customer.coupons.toString());
     const response = (
-      await Axios.put<Customer>(
-        "http://localhost:8080/admin/updateCustomer" + customer.id,
-        formData
+      await axios.put<string>(
+        "http://localhost:8080/admin/updateCustomer",
+        customer
       )
     ).data;
-    customersStore.dispatch(updateCustomer(response));
-    return response;
-  }
-
-  public async addNewCustomer(customer: Customer) {
-    const formData = new FormData();
-    formData.append("firstName", customer.firstName);
-    formData.append("lastName", customer.lastName);
-    formData.append("email", customer.email);
-    formData.append("password", customer.password);
-    formData.append("coupons", customer.coupons.toString());
-    const response = (
-      await Axios.post<Customer>(
-        "http://localhost:8080/admin/addCustomer",
-        formData
-      )
-    ).data;
-    customersStore.dispatch(addCustomer(response));
+    adminStore.dispatch(updateCustomer(customer));
     return response;
   }
 
   public async deleteCustomer(id: number) {
     const response = (
-      await Axios.delete<number>("http://localhost:8080/admin/deleteCustomer/" + id)
+      await axios.delete<string>(
+        "http://localhost:8080/admin/deleteCustomer/" + id
+      )
     ).data;
-    customersStore.dispatch(deleteCustomer(response));
+    adminStore.dispatch(deleteCustomer(id));
+    return response;
+  }
+
+  public async getOneCustomer(id: number) {
+    const customer = adminStore.getState().customers.find((c) => c.id == id);
+    if (customer == undefined) {
+      return (
+        await axios.get<Customer>(
+          "http://localhost:8080/admin/getOneCustomer/" + id
+        )
+      ).data;
+    } else return customer;
   }
 
   public async getAllCustomers() {
-    if (customersStore.getState().customers.length == 0) {
-      const response = await Axios.get<Customer[]>(
-        "http://localhost:8080/admin/allCustomers"
-      );
-      customersStore.dispatch(fetchCustomers(response.data));
-      return response.data;
+    if (adminStore.getState().customers.length == 0) {
+      const customers = (
+        await axios.get<Customer[]>("http://localhost:8080/admin/allCustomers")
+      ).data;
+      adminStore.dispatch(fetchCustomer(customers));
+      return customers;
     }
-    return customersStore.getState().customers;
-  }
-
-  public async getCustomer(id: number): Promise<Customer> {
-    const customer = customersStore
-      .getState()
-      .customers.find((c) => c.id == id);
-    if (customer == undefined) throw Error("Id not found!");
-    else return customer;
+    return adminStore.getState().customers;
   }
 }
-
-export default AdminService;
+const adminService = new AdminService();
+export default adminService;

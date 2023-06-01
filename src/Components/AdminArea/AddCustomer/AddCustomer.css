@@ -1,0 +1,22 @@
+.AddCustomer {}
+
+.AddCustomer h3{
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 900;
+    font-size: 1.8rem;
+    color: #E6FFFD;
+    letter-spacing: 1px;
+}
+form {
+    text-align: center;
+    border-style: solid;
+  border-color:#E6FFFD;
+  border-width: 1px;
+  border-radius: 5%;
+  margin-top: 5px;
+}
+
+input {
+margin-top: 1rem;
+}

@@ -1,0 +1,10 @@
+.UpdateCompany {}
+
+.UpdateCompany h3 {
+    text-align: center;
+    margin-top: 10px;
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: #E6FFFD;
+  letter-spacing: 1px;
+}

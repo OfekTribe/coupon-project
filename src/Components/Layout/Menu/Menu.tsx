@@ -1,24 +1,18 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import AuthMenu from "../../AuthArea/AuthMenu/AuthMenu";
+import { NavLink } from "react-router-dom";
 import "./Menu.css";
-import { ClientType } from "../../../Models/Credentials";
+import { useEffect, useState } from "react";
 import { authStore } from "../../../Stores/AuthState";
-import { useState, useEffect } from "react";
+import AuthMenu from "../../AuthArea/AuthMenu/AuthMenu";
+import AboutUs from "../AboutUs/AboutUs";
 
 function Menu(): JSX.Element {
-  const navigate = useNavigate();
-  const [clientType, setClientType] = useState<ClientType>();
+  const [token, setToken] = useState<string>();
 
   useEffect(() => {
-    setClientType(authStore.getState().userData?.clientType);
-    const unsubscribe = authStore.subscribe(() => {
-      if (authStore.getState().token) {
-        setClientType(authStore.getState().userData.clientType);
-      } else {
-        navigate("/home");
-        window.location.reload();
-      }
-    })
+    setToken(authStore.getState().token);
+    const unsubscribe = authStore.subscribe(() =>
+      setToken(authStore.getState().token)
+    );
 
     return () => {
       unsubscribe();
@@ -35,37 +29,65 @@ function Menu(): JSX.Element {
       </NavLink>
       <br />
       <br />
-
-      {clientType?.toString() == "Admin" &&
+      {token && authStore.getState().clientType.toString() == "Admin" && (
         <>
-          <NavLink to={"/customers"}>
-            <button className="button">Customers</button>
+          <NavLink to="/administrator">
+            <button className="button">Home</button>
           </NavLink>
-          <br /><br />
-          <NavLink to={"/companies"}>
+          <br />
+          <br />
+          <NavLink to="/administrator/companies">
             <button className="button">Companies</button>
           </NavLink>
-        </>
-      }
-      {clientType?.toString() == "Customer" &&
-        <>
-          <NavLink to={"/coupons"}>
-            <button className="button">Coupons</button>
+          <br />
+          <br />
+          <NavLink to="/administrator/customers">
+            <button className="button">Customers</button>
           </NavLink>
-          <br /><br />
+          <br />
+          <br />
+          <NavLink to="/administrator/addCompany">
+            <button className="button">Add Company</button>
+          </NavLink>
+          <br />
+          <br />
+          <NavLink to="/administrator/addCustomer">
+            <button className="button">Add Customer</button>
+          </NavLink>
+          <br />
+          <br />
         </>
-    }
-      {clientType?.toString() == "Company" && 
+      )}
+
+      {token && authStore.getState().clientType.toString() == "Company" && (
         <>
-          <NavLink to={"/addCoupon"}>
+          <NavLink to="/company/coupons">
+            <button className="button">My Coupons</button>
+          </NavLink>
+          <br />
+          <br />
+          <NavLink to="/company/addCoupon">
             <button className="button">Add Coupon</button>
           </NavLink>
-          <br /><br />
-          <NavLink to={"/updateCoupon"}>
-            <button className="button">Update Coupon</button>
-          </NavLink>
+          <br />
+          <br />
         </>
-      }
+      )}
+
+      {token && authStore.getState().clientType.toString() == "Customer" && (
+        <>
+          <NavLink to="/customer">
+            <button className="button">Home</button>
+          </NavLink>
+          <br />
+          <br />
+          <NavLink to="/customer/coupons">
+            <button className="button">My Coupons</button>
+          </NavLink>
+          <br />
+          <br />
+        </>
+      )}
     </div>
   );
 }

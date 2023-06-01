@@ -4,22 +4,19 @@ import { createStore } from "redux";
 
 export class AuthState {
   public token: string = null;
-  public userData: userData = null;
+  public clientType: ClientType = null;
+  public name: string = null;
 
   constructor() {
-    if (localStorage.token) {
-      this.token = localStorage.token;
-      const container: { date: userData } = jwtDecode(this.token);
-      this.userData = container.date;
+    if (sessionStorage.token) {
+      this.token = sessionStorage.token;
+      const container: { clientType: ClientType; name: string } = jwtDecode(
+        this.token
+      );
+      this.clientType = container.clientType;
+      this.name = container.name;
     }
   }
-}
-
-export class userData {
-  public id: number = null;
-  public email: string = null;
-  public name: string = null;
-  public clientType: ClientType = null;
 }
 
 export enum AuthActionTypes {
@@ -29,7 +26,7 @@ export enum AuthActionTypes {
 
 export interface AuthAction {
   type: AuthActionTypes;
-  payload?: string;
+  payload?: any;
 }
 
 export function LoginAction(token: string) {
@@ -58,16 +55,18 @@ export function authReducer(
     case AuthActionTypes.Login:
       const token = action.payload;
       newState.token = token;
-      const container: { data: userData } = getDecodedAccessToken(
-        newState.token
-      );
-      newState.userData = container.data;
-      localStorage.token = token;
+      const container: { clientType: ClientType; name: string } =
+        jwtDecode(token);
+      newState.clientType = container.clientType;
+      newState.name = container.name;
+      sessionStorage.token = token;
       break;
+
     case AuthActionTypes.Logout:
       newState.token = null;
-      newState.userData = null;
-      localStorage.removeItem("token");
+      newState.clientType = null;
+      newState.name = null;
+      sessionStorage.removeItem("token");
       break;
   }
   return newState;

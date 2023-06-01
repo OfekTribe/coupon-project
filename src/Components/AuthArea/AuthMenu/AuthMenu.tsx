@@ -21,7 +21,7 @@ function AuthMenu(): JSX.Element {
 
   function logout() {
     authService
-      .logout()
+      .Logout()
       .then(() => {
         navigate("/login");
       })
