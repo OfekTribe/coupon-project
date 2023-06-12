@@ -55,7 +55,7 @@ function CouponDetails(): JSX.Element {
 
           <button onClick={updateCoupon}>Edit</button>
           <br />
-          <button onClick={deleteMe}>Delete Me</button>
+          <button className="button-33" onClick={deleteMe}>Delete Me</button>
         </div>
       )}
     </div>

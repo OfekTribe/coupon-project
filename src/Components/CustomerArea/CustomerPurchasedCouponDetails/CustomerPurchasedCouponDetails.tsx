@@ -19,7 +19,7 @@ function CustomerPurchasedCouponDetails(): JSX.Element {
   return (
     <div className="CustomerPurchasedCouponDetails">
       <NavLink to="/customer/coupons">
-        <button>back</button>
+        <button className="button-33">back</button>
       </NavLink>
       {!getCoupon && <p>Sorry, cannot find the coupon...</p>}
 

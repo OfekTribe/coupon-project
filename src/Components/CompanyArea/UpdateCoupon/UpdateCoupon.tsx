@@ -62,7 +62,7 @@ function UpdateCoupon(): JSX.Element {
   return (
     <div className="UpdateCoupon">
       <NavLink to={"/company/coupons/" + id}>
-        <button>back</button>
+        <button className="button-33">back</button>
       </NavLink>
       <h3>Update coupon :</h3>
 
@@ -136,7 +136,7 @@ function UpdateCoupon(): JSX.Element {
         <span>{formState.errors?.image?.message}</span>
         <br />
 
-        <button type="submit" value="edit" >Update</button>
+        <button className="button-33" type="submit" value="edit" >Update</button>
       </form>
     </div>
   );

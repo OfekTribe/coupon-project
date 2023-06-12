@@ -48,7 +48,7 @@ function CustomerCoupons(): JSX.Element {
 
       <div id="filters">
         <input ref={inputRef} type="number" placeholder="max price" min={0} />
-        <button onClick={byMaxPrie}>filter by price</button>
+        <button className="button-33" onClick={byMaxPrie}>filter by price</button>
 
         <select ref={inputRef2}>
           <option>Food</option>
@@ -56,7 +56,7 @@ function CustomerCoupons(): JSX.Element {
           <option>Gaming</option>
           <option>Sport</option>
         </select>
-        <button onClick={byCategory}>filter by category</button>
+        <button className="button-33" onClick={byCategory}>filter by category</button>
       </div>
 
       <div>
